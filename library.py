@@ -198,15 +198,13 @@ class Library(object):
             )'
         )
         
-        self.ripl.assume('array_fold',
-            '(lambda (op arr)\
-                (fold op\
-                    (array_get_map arr)\
-                    (array_get_min arr)\
-                    (array_get_max arr)\
-                )\
-            )'
-        )
+        self.ripl.assume('array_fold', """
+            (lambda (op arr)
+                (arr (lambda (min max map)
+                    (fold op map min max)
+                ))
+            )
+        """)
 
         # op should take thunks and return actual values
         self.ripl.assume('lazy_fold',
@@ -448,6 +446,70 @@ class Library(object):
                 )\
             )'
         )
+    
+    def load_matrix(self):
+        self.load('array')
+        
+        self.make_struct('matrix', 'row', 'col', 'map')
+        
+        self.ripl.assume('matrix_row_view', """
+            (lambda (mat)
+                (let ((map (matrix_get_map mat)))
+                    (mem (lambda (r)
+                        (mem (lambda (c)
+                            (map r c)
+                        ))
+                    ))
+                )
+            )
+        """)
+        
+        self.ripl.assume('matrix_col_view', """
+            (lambda (mat)
+                (let ((map (matrix_get_map mat)))
+                    (mem (lambda (c)
+                        (mem (lambda (r)
+                            (map r c)
+                        ))
+                    ))
+                )
+            )
+        """)
+        
+        self.ripl.assume('dot_prod', """
+            (lambda (arr1 arr2 len)
+                (fold +
+                    (lambda (i)
+                        (* (arr1 i) (arr2 i))
+                    )
+                    0 len
+                )
+            )
+        """)
+        
+        self.ripl.assume('matrix_prod', """
+            (lambda (mat1 mat2)
+                (mat1 (lambda (r1 c1 m1)
+                    (mat2 (lambda (r2 c2 m2)
+                        (let
+                            (
+                                (mat1_row_view (matrix_row_view mat1))
+                                (mat2_col_view (matrix_col_view mat2))
+                            )
+                            (make_matrix r1 c2
+                                (mem (lambda (r c)
+                                    (dot_prod
+                                        (mat1_row_view r)
+                                        (mat2_col_view c)
+                                        r2
+                                    )
+                                ))
+                            )
+                        )
+                    ))
+                ))
+            )
+        """)
     
     # trees are always lazy
     # so is the count

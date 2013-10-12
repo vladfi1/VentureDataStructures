@@ -1,6 +1,9 @@
+import sys
+sys.setrecursionlimit(10000)
+
 import time
 from venture import shortcuts
-ripl = shortcuts.make_church_prime_ripl()
+ripl = shortcuts.make_church_prime_ripl(lite=True)
 
 from library import Library
 lib = Library(ripl)
@@ -54,14 +57,14 @@ def test_iterate(N):
 # O(N) forwards
 # O(1) to infer
 def test_pair_cons(N):
-    make_struct('pair', 'fst', 'nxt')
+    lib.make_struct('pair', 'first', 'next')
     
-    ripl.assume('get', '(lambda (n lst) (if (int_eq n 0) (get_fst lst) (get (int_minus n 1) (get_nxt lst))))')
+    ripl.assume('get', '(lambda (n lst) (if (int_eq n 0) (pair_get_first lst) (get (int_minus n 1) (pair_get_next lst))))')
     
-    ripl.assume('list0', '(pair (flip) 0)')
+    ripl.assume('list0', '(make_pair (flip 0.5) 0)')
     
     for i in range(N):
-        ripl.assume('list%d' % (i+1), '(pair (flip) list%d)' % i)
+        ripl.assume('list%d' % (i+1), '(make_pair (flip 0.5) list%d)' % i)
     
     ripl.predict('(get %d list%d)' % (N, N))
 
@@ -186,6 +189,26 @@ def test_choose(N):
     ripl.assume('n', log(N))
     ripl.assume('choose', '(make_choose n)')
     ripl.predict('(fold int_plus choose 0 N)')
+
+def test_matrix_prod(N):
+    lib.load('matrix')
+    ripl.assume('N', N)
+    
+    ripl.assume('A', """
+        (make_matrix N N
+            (lambda (r c)
+                (normal (- r c) 1)))
+    """)
+    
+    ripl.assume('b', """
+        (make_matrix N 1
+            (lambda (r c) 1))
+    """)
+    
+    ripl.assume('x', """
+        (make_matrix N 1
+            (lambda (r c) 1))
+    """)
 
 # O(N) forwards
 # O(log N) to infer
@@ -361,7 +384,6 @@ def run_test(test_fun, N, I=100):
     return (split - start, end - split)
 
 def test_asymptotics(test_fun, size=9, I=100):
-    times = [run_test(test_fun, 2**n, I) for n in range(1,size)]
-    #times = [(times[n][0]/(2**n), times[n][1]/(2**n)) for n in range(1, 9)]
-    return times
+    for n in range(1, size):
+        print run_test(test_fun, 2**n, I)
 
