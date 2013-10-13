@@ -1,9 +1,13 @@
 import sys
 sys.setrecursionlimit(10000)
 
+lite = False
+if "--lite" in sys.argv:
+    lite = True
+
 import time
 from venture import shortcuts
-ripl = shortcuts.make_church_prime_ripl(lite=True)
+ripl = shortcuts.make_church_prime_ripl(lite=lite)
 
 from library import Library
 lib = Library(ripl)
