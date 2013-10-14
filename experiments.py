@@ -375,7 +375,18 @@ def test_blog(N):
     for i in range(6):
         ripl.predict('(get_blip %d)' % i)
 
+import cProfile
+
 def run_test(test_fun, N, I=100):
+    cProfile.runctx("test_fun(N)", None, locals())
+    if I > 0:
+        with open("temp", "w") as temp:
+            cProfile.runctx("ripl.infer(I)", globals(), locals())
+            
+        
+    lib.clear()
+    
+    return
     start = time.time()
     test_fun(N)
     split = time.time()
