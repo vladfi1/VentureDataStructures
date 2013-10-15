@@ -375,6 +375,54 @@ def test_blog(N):
     for i in range(6):
         ripl.predict('(get_blip %d)' % i)
 
+def test_scramble(N):
+    ripl.assume('flips', "(mem (lambda (i n) (flip)))")
+    
+    ripl.assume('pow2', """
+        (mem (lambda (i)
+            (if (int_eq i 0) 1
+                (int_times 2
+                    (pow2 (int_minus i 1))))))
+    """)
+    
+    ripl.assume('bit_set', """
+        (lambda (i n)
+            (int_eq 1
+                (int_mod
+                    (int_div n (pow2 i))
+                    2)))
+    """)
+    
+    ripl.assume('clear_bit', """
+        (lambda (i n)
+            (if (bit_set i n)
+                (int_minus n (pow2 i))
+                n))
+    """)
+    
+    ripl.assume('flip_bit', """
+        (lambda (i n)
+            (if (bit_set i n)
+                (int_minus n (pow2 i))
+                (int_plus n (pow2 i)))
+    """)
+    
+    ripl.assume('scramble', """
+        (lambda (map i)
+            (mem (lambda (n)
+                (if (flips i (clear_bit i))
+                    (map (flip_bit i n))
+                    (map n)))))
+    """)
+    
+    ripl.assume('map0', '(lambda (n) n)')
+    
+    k = log(N)
+    for i in range(k):
+        ripl.assume('map%d' % (i+1), "(scramble map%d %d)" % i)
+    
+    ripl.predict('(map%d 0)' % k)
+
 import cProfile
 
 def profile_drg(test_fun, N):
