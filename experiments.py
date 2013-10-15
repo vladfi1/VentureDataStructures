@@ -404,13 +404,13 @@ def test_scramble(N):
         (lambda (i n)
             (if (bit_set i n)
                 (int_minus n (pow2 i))
-                (int_plus n (pow2 i)))
+                (int_plus n (pow2 i))))
     """)
     
     ripl.assume('scramble', """
         (lambda (map i)
             (mem (lambda (n)
-                (if (flips i (clear_bit i))
+                (if (flips i n)
                     (map (flip_bit i n))
                     (map n)))))
     """)
@@ -419,9 +419,11 @@ def test_scramble(N):
     
     k = log(N)
     for i in range(k):
-        ripl.assume('map%d' % (i+1), "(scramble map%d %d)" % i)
+        ripl.assume('map%d' % (i+1), "(scramble map%d %d)" % (i, i))
     
-    ripl.predict('(map%d 0)' % k)
+    lib.load('array')
+    
+    ripl.predict('(fold int_plus map%d 0 %d)' % (k, N))
 
 import cProfile
 
