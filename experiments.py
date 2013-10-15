@@ -436,19 +436,16 @@ def profile_drg(test_fun, N):
         sizes.append((len(drg.resampling), len(drg.absorbing), len(drg.brush)))
     
     lib.clear()
-    ripl.clear()
     return sizes
 
-def run_test(test_fun, N, I=100):
+def cprofile(test_fun, N, I=100):
     cProfile.runctx("test_fun(N)", None, locals())
     if I > 0:
         with open("temp", "w") as temp:
             cProfile.runctx("ripl.infer(I)", globals(), locals())
-            
-        
     lib.clear()
     
-    return
+def run_test(test_fun, N, I=100):
     start = time.time()
     test_fun(N)
     split = time.time()
