@@ -377,6 +377,20 @@ def test_blog(N):
 
 import cProfile
 
+def profile_drg(test_fun, N):
+    test_fun(N)
+    engine = ripl.sivm.core_sivm.engine
+    from venture.venturelite import trace, constructDRG
+    sizes = []
+    print(len(engine.trace))
+    for node in engine.trace.randomChoices:
+        drg = constructDRG.constructDRG(engine.trace, [node])
+        sizes.append((len(drg.resampling), len(drg.absorbing), len(drg.brush)))
+    
+    lib.clear()
+    ripl.clear()
+    return sizes
+
 def run_test(test_fun, N, I=100):
     cProfile.runctx("test_fun(N)", None, locals())
     if I > 0:
