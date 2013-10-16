@@ -70,7 +70,7 @@ def test_pair_cons(N):
     for i in range(N):
         ripl.assume('list%d' % (i+1), '(make_pair (flip 0.5) list%d)' % i)
     
-    ripl.predict('(get %d list%d)' % (N, N))
+    ripl.predict('(get %d list%d)' % (0, N))
 
 # O(N) forwards
 # O(N) to infer
@@ -378,34 +378,35 @@ def test_blog(N):
 def test_scramble(N):
     ripl.assume('flips', "(mem (lambda (i n) (flip)))")
     
-    #ripl.assume('pow2', """
-    #    (mem (lambda (i)
-    #        (if (int_eq i 0) 1
-    #            (int_times 2
-    #                (pow2 (int_minus i 1))))))
-    
-    #ripl.assume('bit_set', """
-    #    (lambda (i n)
-    #""")
-    #        (int_eq 1
-    #            (int_mod
-    #                (int_div n (pow2 i))
-    #                2)))
-    #""")
-    
-    #ripl.assume('clear_bit', """
-    #    (lambda (i n)
-    #        (if (bit_set i n)
-    #            (int_minus n (pow2 i))
-    #            n))
-    #""")
-    
-    #ripl.assume('flip_bit', """
-    #    (lambda (i n)
-    #        (if (bit_set i n)
-    #            (int_minus n (pow2 i))
-    #            (int_plus n (pow2 i))))
-    #""")
+    if not lite:
+        ripl.assume('pow2', """
+            (mem (lambda (i)
+                (if (int_eq i 0) 1
+                    (int_times 2
+                        (pow2 (int_minus i 1))))))
+        """)
+        
+        ripl.assume('bit_set', """
+            (lambda (i n)
+                (int_eq 1
+                    (int_mod
+                        (int_div n (pow2 i))
+                        2)))
+        """)
+        
+        ripl.assume('clear_bit', """
+            (lambda (i n)
+                (if (bit_set i n)
+                    (int_minus n (pow2 i))
+                    n))
+        """)
+        
+        ripl.assume('flip_bit', """
+            (lambda (i n)
+                (if (bit_set i n)
+                    (int_minus n (pow2 i))
+                    (int_plus n (pow2 i))))
+        """)
     
     ripl.assume('scramble', """
         (lambda (map i)
@@ -424,6 +425,46 @@ def test_scramble(N):
     for j in range(k, k+1):
         for n in range(N):
             ripl.predict('(map%d %d)' % (j, n))
+
+def test_in_range(N):
+    ripl.assume('element', '(uniform_discrete 0 %d)' % N)
+    
+    if not lite:
+        ripl.assume('pow2', """
+            (mem (lambda (i)
+                (if (int_eq i 0) 1
+                    (int_times 2
+                        (pow2 (int_minus i 1))))))
+        """)
+        
+        ripl.assume('bit_set', """
+            (lambda (i n)
+                (int_eq 1
+                    (int_mod
+                        (int_div n (pow2 i))
+                        2)))
+        """)
+        
+        ripl.assume('clear_bit', """
+            (lambda (i n)
+                (if (bit_set i n)
+                    (int_minus n (pow2 i))
+                    n))
+        """)
+    
+    ripl.assume('n', log(N))
+    
+    ripl.assume('in_range', """
+        (mem (lambda (i min)
+            (if (and (int_lt i n)
+                    (not (in_range (int_plus i 1) (clear_bit i min))))
+                false
+                (and (int_lte min element)
+                    (int_lt element (int_plus min (pow2 i)))))))
+    """)
+    
+    for k in range(N):
+        ripl.predict('(in_range 0 %d)' % k)
 
 def render_drg(address):
     engine = ripl.sivm.core_sivm.engine
