@@ -378,40 +378,40 @@ def test_blog(N):
 def test_scramble(N):
     ripl.assume('flips', "(mem (lambda (i n) (flip)))")
     
-    ripl.assume('pow2', """
-        (mem (lambda (i)
-            (if (int_eq i 0) 1
-                (int_times 2
-                    (pow2 (int_minus i 1))))))
-    """)
+    #ripl.assume('pow2', """
+    #    (mem (lambda (i)
+    #        (if (int_eq i 0) 1
+    #            (int_times 2
+    #                (pow2 (int_minus i 1))))))
     
-    ripl.assume('bit_set', """
-        (lambda (i n)
-            (int_eq 1
-                (int_mod
-                    (int_div n (pow2 i))
-                    2)))
-    """)
+    #ripl.assume('bit_set', """
+    #    (lambda (i n)
+    #""")
+    #        (int_eq 1
+    #            (int_mod
+    #                (int_div n (pow2 i))
+    #                2)))
+    #""")
     
-    ripl.assume('clear_bit', """
-        (lambda (i n)
-            (if (bit_set i n)
-                (int_minus n (pow2 i))
-                n))
-    """)
+    #ripl.assume('clear_bit', """
+    #    (lambda (i n)
+    #        (if (bit_set i n)
+    #            (int_minus n (pow2 i))
+    #            n))
+    #""")
     
-    ripl.assume('flip_bit', """
-        (lambda (i n)
-            (if (bit_set i n)
-                (int_minus n (pow2 i))
-                (int_plus n (pow2 i))))
-    """)
+    #ripl.assume('flip_bit', """
+    #    (lambda (i n)
+    #        (if (bit_set i n)
+    #            (int_minus n (pow2 i))
+    #            (int_plus n (pow2 i))))
+    #""")
     
     ripl.assume('scramble', """
         (lambda (map i)
             (mem (lambda (n)
-                (if (flips i n)
-                    (map (flip_bit i n))
+                (if (flips i (clear_bit 0 n))
+                    (map (flip_bit 0 n))
                     (map n)))))
     """)
     
@@ -421,24 +421,35 @@ def test_scramble(N):
     for i in range(k):
         ripl.assume('map%d' % (i+1), "(scramble map%d %d)" % (i, i))
     
-    lib.load('array')
-    
-    ripl.predict('(fold int_plus map%d 0 %d)' % (k, N))
+    for j in range(k, k+1):
+        for n in range(N):
+            ripl.predict('(map%d %d)' % (j, n))
 
-import cProfile
+def render_drg(address):
+    engine = ripl.sivm.core_sivm.engine
+    
+    from venture.venturelite import render, constructDRG
+    pNode = engine.trace.getNode(address)
+    drg = constructDRG.constructDRG(engine.trace, [pNode])
+    render.renderTrace(engine, "drg", {"drg":drg})
 
 def profile_drg(test_fun, N):
     test_fun(N)
     engine = ripl.sivm.core_sivm.engine
     from venture.venturelite import trace, constructDRG
-    sizes = []
+    sizes = {}
     print(len(engine.trace))
     for node in engine.trace.randomChoices:
         drg = constructDRG.constructDRG(engine.trace, [node])
-        sizes.append((len(drg.resampling), len(drg.absorbing), len(drg.brush)))
+        sizes[node.address] = (len(drg.resampling), len(drg.absorbing), len(drg.brush))
+    
+    maxAddr = max(sizes.keys(), key=lambda a: sum(sizes[a]))
+    #render_drg(maxAddr)
     
     lib.clear()
-    return sizes
+    return sizes[maxAddr]
+
+import cProfile
 
 def cprofile(test_fun, N, I=100):
     cProfile.runctx("test_fun(N)", None, locals())
