@@ -649,33 +649,33 @@ class Library(object):
         )
         
         # inserts a single key with count num into the tree
-        self.ripl.assume('tree_from_key',
-            '(lambda (min max key num)\
-                (mem (lambda ()\
-                    (let\
-                        (\
-                            (avg (average min max))\
-                            (n\
-                                (if\
-                                    (and\
-                                        (int_gt num 0)\
-                                        (in_range min max key)\
-                                    )\
-                                    num 0\
-                                )\
-                            )\
-                        )\
-                        (if (int_eq min avg)\
-                            (make_tree min max (thunk n) false false)\
-                            (make_tree min max (thunk n)\
-                                (tree_from_key min avg key n)\
-                                (tree_from_key avg max key n)\
-                            )\
-                        )\
-                    )\
-                ))\
-            )'
-        )
+        self.ripl.assume('tree_from_key', """
+            (lambda (min max key num)
+                (mem (lambda ()
+                    (let
+                        (
+                            (avg (average min max))
+                            (n
+                                (if
+                                    (and
+                                        (int_gt num 0)
+                                        (in_range min max key)
+                                    )
+                                    num 0
+                                )
+                            )
+                        )
+                        (if (int_eq min avg)
+                            (make_tree min max (thunk n) false false)
+                            (make_tree min max (thunk n)
+                                (tree_from_key min avg key n)
+                                (tree_from_key avg max key n)
+                            )
+                        )
+                    )
+                ))
+            )
+        """)
         
         # inserts a a range of keys with count num into the tree
         self.ripl.assume('tree_from_range',
