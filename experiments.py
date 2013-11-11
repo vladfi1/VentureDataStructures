@@ -1,13 +1,9 @@
 import sys
 sys.setrecursionlimit(10000)
 
-lite = False
-if "--lite" in sys.argv:
-    lite = True
-
 import time
 from venture import shortcuts
-ripl = shortcuts.make_church_prime_ripl(lite=lite)
+ripl = shortcuts.make_church_prime_ripl()
 
 from library import Library
 lib = Library(ripl)
@@ -223,7 +219,7 @@ def test_tree_from_key(N):
     
     ripl.assume('tree', '(tree_from_key 0 N (uniform_discrete 0 (int_minus N 1)) 1)')
     ripl.assume('array', '(tree_to_array tree)')
-    ripl.observe('(array_fold int_plus array)', 1)
+    ripl.predict('(array_fold int_plus array)')
 
 def test_map_to_tree(N):
     lib.load('tree')
