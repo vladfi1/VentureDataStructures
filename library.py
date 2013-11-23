@@ -72,20 +72,6 @@ class Library(object):
             ))"""
         )
         
-        self.ripl.assume('uniform',
-            """(lambda (n)
-                (fold int_plus
-                    (lambda (i)
-                        (if (flip)
-                            (int_pow 2 i)
-                            0
-                        )
-                    )
-                    0 n
-                )
-            )"""
-        )
-        
         self.ripl.assume('thunk',
             """(lambda (c)
                 (mem (lambda ()
@@ -453,14 +439,33 @@ class Library(object):
         
         self.make_struct('matrix', 'row', 'col', 'map')
         
+        self.ripl.assume('matrix_get_entry', """
+            (lambda (mat row col)
+                ((matrix_get_map mat) row col))
+        """)
+        
+        self.ripl.assume('matrix_get_row', """
+            (lambda (mat row)
+                (let ((map (matrix_get_map mat)))
+                    (lambda (col)
+                        (map row col))))
+        """)
+                
+        self.ripl.assume('matrix_get_row', """
+            (lambda (mat col)
+                (let ((map (matrix_get_map mat)))
+                    (lambda (row)
+                        (map row col))))
+        """)
+        
         self.ripl.assume('matrix_row_view', """
             (lambda (mat)
                 (let ((map (matrix_get_map mat)))
-                    (mem (lambda (r)
-                        (mem (lambda (c)
+                    (lambda (r)
+                        (lambda (c)
                             (map r c)
-                        ))
-                    ))
+                        )
+                    )
                 )
             )
         """)
@@ -468,11 +473,11 @@ class Library(object):
         self.ripl.assume('matrix_col_view', """
             (lambda (mat)
                 (let ((map (matrix_get_map mat)))
-                    (mem (lambda (c)
-                        (mem (lambda (r)
+                    (lambda (c)
+                        (lambda (r)
                             (map r c)
-                        ))
-                    ))
+                        )
+                    )
                 )
             )
         """)
@@ -799,4 +804,155 @@ class Library(object):
                 )
             )"""
         )
-
+        
+        self.ripl.assume('pymem0', """
+            (lambda (proc alpha d)
+                (let
+                    (
+                        (crp (make_crp alpha d))
+                        (procs (mem (lambda (table) (mem proc))))
+                    )
+                    (lambda () ((procs (crp))))
+                )
+            )
+        """)
+    
+    def load_range(self):
+        self.load('misc')
+        
+        self.ripl.assume('range_tree', """
+            (lambda (min max map op)
+                (let ((avg (average i j)))
+                    (if (int_eq min avg)
+                        (lambda (i j) (map i))
+                        (let (
+                            (left (make_range min avg map op))
+                            (right (make_range avg max map op)))
+                            (mem (lambda (i j)
+                                (if (int_lt j avg)
+                                    (left i j)
+                                    (if (int_lte avg i)
+                                        (right i j)
+                                        (op (left i avg) (right avg j))
+                                    )
+                                )
+                            ))
+                        )
+                    )
+                )
+            )
+        """)
+    
+    def load_categorical(self):
+        self.load('misc')
+        self.make_struct('categorical', 'sampler', 'weights', 'total')
+        
+        self.ripl.assume('build_categorical', """
+            (lambda (min max weights)
+                (let ((avg (average min max)))
+                    (if (int_eq min avg)
+                        (make_categorical
+                            (lambda () min)
+                            weights
+                            (weights min)
+                        )
+                        (let (
+                                (left (build_categorical min avg weights))
+                                (right (build_categorical avg max weights))
+                                (left_total (categorical_get_total left))
+                                (total (+ left_total (categorical_get_total right)))
+                            )
+                            (make_categorical
+                                (lambda ()
+                                    (if (flip (/ left_total total))
+                                        (categorical_sample left)
+                                        (categorical_sample right)
+                                    )
+                                )
+                                weights
+                                total
+                            )
+                        )
+                    )
+                )
+            )
+        """)
+        
+        self.ripl.assume('categorical_sample', """
+            (lambda (cat)
+                ((categorical_get_sampler cat)))
+        """)
+        
+        # normalized weight
+        self.ripl.assume('categorical_get_weight', """
+            (lambda (cat sample)
+                (/ ((categorical_get_weights cat) sample) (categorical_get_total cat)))
+        """)
+    
+    def observe_categorical(self, categorical, literal):
+        self.ripl.observe('(flip (categorical_get_weight %s %d))' % (categorical, literal), True)
+    
+    def load_dirichlet(self):
+        self.ripl.assume('dirichlet', """
+            (lambda (alpha)
+                (mem (lambda (i) (gamma (alpha i) 1))))
+        """)
+        
+        self.ripl.assume('symmetric_dirichlet', """
+            (lambda (alpha)
+                (mem (lambda (i) (gamma alpha 1))))
+        """)
+    
+    def load_sm(self):
+        self.load('categorical')
+        self.load('dirichlet')
+        self.make_struct('node', 'sampler', 'children')
+        
+        self.ripl.assume('sm_get_sampler', """
+            (lambda (node context)
+                (if (is_pair context)
+                    (sm_get_sampler
+                        ((node_get_children node) (first context))
+                        (rest context)
+                    )
+                    ((node_get_sampler node))
+                )
+            )
+        """)
+        
+        self.ripl.assume('sm_sample', """
+            (lambda (node context)
+                (categorical_sample (sm_get_sampler node context)))
+        """)
+        
+        self.ripl.assume('make_sm', """
+            (lambda (base size)
+                (let ((dir (dirichlet base)))
+                    (make_node
+                        (mem (lambda () (build_categorical 0 size dir)))
+                        (mem (lambda (char)
+                            (make_sm dir size)
+                        ))
+                    )
+                )
+            )
+        """)
+        
+        self.ripl.assume('sm_gen_seq', """
+            (lambda (sm context n)
+                (if (int_lte n 0)
+                    (list)
+                    (let ((next (sm_sample sm context)))
+                        (pair next
+                            (sm_gen_seq sm
+                                (pair next context)
+                                (int_minus n 1)
+                            )
+                        )
+                    )
+                )
+            )
+        """)
+    
+    def observe_sm(self, sm, context, literal):
+        self.observe_categorical('(sm_get_sampler %s %s)' % (sm, context), literal)

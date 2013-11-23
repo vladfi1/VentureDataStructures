@@ -56,27 +56,29 @@ def test_iterate(N):
 
 # O(N) forwards
 # O(1) to infer
-def test_pair_cons(N):
-    lib.make_struct('pair', 'first', 'next')
+def test_native_pair(N):
+    ripl.assume('get', '(lambda (n lst) (if (int_eq n 0) (first lst) (get (int_minus n 1) (rest lst))))')
     
-    ripl.assume('get', '(lambda (n lst) (if (int_eq n 0) (pair_get_first lst) (get (int_minus n 1) (pair_get_next lst))))')
-    
-    ripl.assume('list0', '(make_pair (flip 0.5) 0)')
+    ripl.assume('list0', '(pair (flip 0.5) 0)')
     
     for i in range(N):
-        ripl.assume('list%d' % (i+1), '(make_pair (flip 0.5) list%d)' % i)
+        ripl.assume('list%d' % (i+1), '(pair (flip 0.5) list%d)' % i)
     
     ripl.predict('(get %d list%d)' % (0, N))
 
 # O(N) forwards
 # O(N) to infer
-def test_native_cons(N):
-    ripl.assume('list0', '(cons (flip) (list 0))')
+def test_lambda_cons(N):
+    lib.make_struct("cons", "car", "cdr")
+    
+    ripl.assume('get', '(lambda (n lst) (if (int_eq n 0) (cons_get_car lst) (get (int_minus n 1) (cons_get_cdr lst))))')
+
+    ripl.assume('list0', '(make_cons (flip 0.5) 0)')
     
     for i in range(N):
-        ripl.assume('list%d' % (i+1), '(cons (flip) list%d)' % i)
+        ripl.assume('list%d' % (i+1), '(make_cons (flip) list%d)' % i)
     
-    ripl.predict('(nth list%d %d)' % (N, N))
+    ripl.predict('(get %d list%d)' % (N, N))
 
 # O(N^2/M) time forwards
 # O(N/M) time to infer
@@ -200,16 +202,16 @@ def test_matrix_prod(N):
                 (normal (- r c) 1)))
     """)
     
-    ripl.assume('b', """
-        (make_matrix N 1
-            (lambda (r c) 1))
-    """)
-    
     ripl.assume('x', """
         (make_matrix N 1
-            (lambda (r c) 1))
+            (lambda (r c) (normal 0 1)))
     """)
-
+    
+    ripl.assume('Ax', "(matrix_prod A x)")
+    
+    for i in range(N):
+        ripl.observe("(normal (matrix_get_entry Ax %d 0) 1)" % i, 1)
+    
 # O(N) forwards
 # O(log N) to infer
 def test_tree_from_key(N):
@@ -462,31 +464,17 @@ def test_in_range(N):
     for k in range(N):
         ripl.predict('(in_range 0 %d)' % k)
 
-def render_drg(address):
-    engine = ripl.sivm.core_sivm.engine
+def test_categorical(N):
+    lib.load('categorical')
+    lib.load('dirichlet')
     
-    from venture.venturelite import render, constructDRG
-    pNode = engine.trace.getNode(address)
-    drg = constructDRG.constructDRG(engine.trace, [pNode])
-    render.renderTrace(engine, "drg", {"drg":drg})
-
-def profile_drg(test_fun, N):
-    test_fun(N)
-    engine = ripl.sivm.core_sivm.engine
-    from venture.venturelite import trace, constructDRG
-    sizes = {}
-    print(len(engine.trace))
-    for node in engine.trace.randomChoices:
-        drg = constructDRG.constructDRG(engine.trace, [node])
-        sizes[node.address] = (len(drg.resampling), len(drg.absorbing), len(drg.brush))
+    ripl.assume('N', N)
     
-    maxAddr = max(sizes.keys(), key=lambda a: sum(sizes[a]))
-    #render_drg(maxAddr)
+    ripl.assume('dir', '(symmetric_dirichlet 1.0)')
+    ripl.assume('cat', '(build_categorical 0 N dir)')
     
-    lib.clear()
-    return sizes[maxAddr]
-
-import cProfile
+    lib.observe_categorical('cat', 0)
+    ripl.predict('(categorical_sample cat)')
 
 def cprofile(test_fun, N, I=100):
     cProfile.runctx("test_fun(N)", None, locals())
