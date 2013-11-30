@@ -11,11 +11,13 @@ it is used to generate the secret keys for cryptographic algorithms. For example
 t random.  Due to the role of randomness in cryptography, the generation of pseu
 do-random numbers is an important subject."""
 
-text = "a b a b"
+#text = "a b a b"
 
 text = text.replace('\n', '')
 text = text.replace('.', ' . ')
 text = text.split()
+
+#text = text[:40]
 
 def encode(tokens):
     count = [0]
@@ -41,10 +43,20 @@ ripl.assume('sm', '(make_sm uniform %d)' % len(token2count))
 ripl.assume('prefix0', "(list)")
 
 for i, s in enumerate(sequence):
-    for t in count2token:
-        print(ripl.predict('(categorical_get_weight (sm_get_sampler sm prefix%d) %d)' % (i, t)))
     lib.observe_sm('sm', 'prefix%d' % i, s)
     ripl.assume('prefix%d' % (i+1), "(pair %d prefix%d)" % (s, i))
 
+def parse_seq(seq):
+    return [count2token[int(v['value'])] for v in seq]
+
 def gen_seq(n):
-    return ripl.predict('(sm_gen_seq sm prefix0 %d)' % n)
+    return parse_seq(ripl.predict('(sm_gen_seq sm prefix0 %d)' % n))
+
+def context2list(context):
+    return "(list " + ' '.join([str(token2count[t]) for t in reversed(context)]) + ")"
+
+def get_distribution(context):
+    l = context2list(context)
+    weights = [(t, ripl.predict('(categorical_get_weight (sm_get_sampler sm %s) %d)' % (l, c))) for (t, c) in token2count.items()]
+    return sorted(weights, key=lambda x: x[1])
+

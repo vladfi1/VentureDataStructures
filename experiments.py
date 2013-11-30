@@ -476,6 +476,13 @@ def test_categorical(N):
     lib.observe_categorical('cat', 0)
     ripl.predict('(categorical_sample cat)')
 
+def test_dirichlet(N):
+    lib.load('dirichlet')
+    
+    ripl.assume('N', N)
+    
+    
+
 def cprofile(test_fun, N, I=100):
     cProfile.runctx("test_fun(N)", None, locals())
     if I > 0:

@@ -893,14 +893,26 @@ class Library(object):
         self.ripl.observe('(flip (categorical_get_weight %s %d))' % (categorical, literal), True)
     
     def load_dirichlet(self):
+        self.load('array')
+        
+        
         self.ripl.assume('dirichlet', """
-            (lambda (alpha)
-                (mem (lambda (i) (gamma (alpha i) 1))))
+            (lambda (alpha size)
+                (mem (lambda (i) (+ .001 (gamma (alpha i) 1))))
+            )
         """)
         
         self.ripl.assume('symmetric_dirichlet', """
-            (lambda (alpha)
-                (mem (lambda (i) (gamma alpha 1))))
+            (lambda (alpha size)
+                (let (
+                        (weights (mem (lambda (i) (gamma alpha 1))))
+                        (total (fold + weights 0 size))
+                    )
+                    (mem (lambda (i)
+                        (/ (weights i) total)
+                    ))
+                )
+            )
         """)
     
     def load_sm(self):
@@ -925,9 +937,14 @@ class Library(object):
                 (categorical_sample (sm_get_sampler node context)))
         """)
         
+        self.ripl.assume('scale', """
+            (lambda (weights factor)
+                (lambda (i) (* (weights i) factor)))
+        """)
+        
         self.ripl.assume('make_sm', """
             (lambda (base size)
-                (let ((dir (dirichlet base)))
+                (let ((dir (dirichlet base size)))
                     (make_node
                         (mem (lambda () (build_categorical 0 size dir)))
                         (mem (lambda (char)
