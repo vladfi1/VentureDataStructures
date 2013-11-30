@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="svg2"
+   inkscape:version="0.47 r22583"
+   width="356"
+   height="288"
+   sodipodi:docname="tmp.svg">
+  <metadata
+     id="metadata138">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs136">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       id="perspective140" />
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1532"
+     inkscape:window-height="947"
+     id="namedview134"
+     showgrid="false"
+     inkscape:zoom="0.22425739"
+     inkscape:cx="372.54724"
+     inkscape:cy="-237.18109"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <!-- Output generated with sn-svg from libsortnetwork 1.0.0 -->
+  <!-- stage 0 -->
+  <line
+     x1="40.5"
+     y1="4"
+     x2="40.5"
+     y2="44"
+     id="line4"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="40"
+     cy="5"
+     r="4"
+     id="circle6"
+     sodipodi:cx="40"
+     sodipodi:cy="5"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="40"
+     cy="45"
+     r="4"
+     id="circle8"
+     sodipodi:cx="40"
+     sodipodi:cy="45"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <line
+     x1="40.5"
+     y1="84"
+     x2="40.5"
+     y2="124"
+     id="line10"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="40"
+     cy="85"
+     r="4"
+     id="circle12"
+     sodipodi:cx="40"
+     sodipodi:cy="85"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="40"
+     cy="125"
+     r="4"
+     id="circle14"
+     sodipodi:cx="40"
+     sodipodi:cy="125"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <line
+     x1="40.5"
+     y1="164"
+     x2="40.5"
+     y2="204"
+     id="line16"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="40"
+     cy="165"
+     r="4"
+     id="circle18"
+     sodipodi:cx="40"
+     sodipodi:cy="165"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="40"
+     cy="205"
+     r="4"
+     id="circle20"
+     sodipodi:cx="40"
+     sodipodi:cy="205"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <line
+     x1="40.5"
+     y1="244"
+     x2="40.5"
+     y2="284"
+     id="line22"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="40"
+     cy="245"
+     r="4"
+     id="circle24"
+     sodipodi:cx="40"
+     sodipodi:cy="245"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="40"
+     cy="285"
+     r="4"
+     id="circle26"
+     sodipodi:cx="40"
+     sodipodi:cy="285"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <!-- stage 1 -->
+  <line
+     x1="80.5"
+     y1="4"
+     x2="80.5"
+     y2="84"
+     id="line28"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="80"
+     cy="5"
+     r="4"
+     id="circle30"
+     sodipodi:cx="80"
+     sodipodi:cy="5"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="80"
+     cy="85"
+     r="4"
+     id="circle32"
+     sodipodi:cx="80"
+     sodipodi:cy="85"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <line
+     x1="95.5"
+     y1="44"
+     x2="95.5"
+     y2="124"
+     id="line34"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="95"
+     cy="45"
+     r="4"
+     id="circle36"
+     sodipodi:cx="95"
+     sodipodi:cy="45"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="95"
+     cy="125"
+     r="4"
+     id="circle38"
+     sodipodi:cx="95"
+     sodipodi:cy="125"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <line
+     x1="80.5"
+     y1="164"
+     x2="80.5"
+     y2="244"
+     id="line40"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="80"
+     cy="165"
+     r="4"
+     id="circle42"
+     sodipodi:cx="80"
+     sodipodi:cy="165"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="80"
+     cy="245"
+     r="4"
+     id="circle44"
+     sodipodi:cx="80"
+     sodipodi:cy="245"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <line
+     x1="95.5"
+     y1="204"
+     x2="95.5"
+     y2="284"
+     id="line46"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="95"
+     cy="205"
+     r="4"
+     id="circle48"
+     sodipodi:cx="95"
+     sodipodi:cy="205"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="95"
+     cy="285"
+     r="4"
+     id="circle50"
+     sodipodi:cx="95"
+     sodipodi:cy="285"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <!-- stage 2 -->
+  <line
+     x1="135.5"
+     y1="44"
+     x2="135.5"
+     y2="84"
+     id="line52"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="135"
+     cy="45"
+     r="4"
+     id="circle54"
+     sodipodi:cx="135"
+     sodipodi:cy="45"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="135"
+     cy="85"
+     r="4"
+     id="circle56"
+     sodipodi:cx="135"
+     sodipodi:cy="85"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <line
+     x1="135.5"
+     y1="204"
+     x2="135.5"
+     y2="244"
+     id="line58"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="135"
+     cy="205"
+     r="4"
+     id="circle60"
+     sodipodi:cx="135"
+     sodipodi:cy="205"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="135"
+     cy="245"
+     r="4"
+     id="circle62"
+     sodipodi:cx="135"
+     sodipodi:cy="245"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <!-- stage 3 -->
+  <line
+     x1="175.5"
+     y1="4"
+     x2="175.5"
+     y2="164"
+     id="line64"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="175"
+     cy="5"
+     r="4"
+     id="circle66"
+     sodipodi:cx="175"
+     sodipodi:cy="5"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="175"
+     cy="165"
+     r="4"
+     id="circle68"
+     sodipodi:cx="175"
+     sodipodi:cy="165"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <line
+     x1="190.5"
+     y1="44"
+     x2="190.5"
+     y2="204"
+     id="line70"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="190"
+     cy="45"
+     r="4"
+     id="circle72"
+     sodipodi:cx="190"
+     sodipodi:cy="45"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="190"
+     cy="205"
+     r="4"
+     id="circle74"
+     sodipodi:cx="190"
+     sodipodi:cy="205"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <line
+     x1="205.5"
+     y1="84"
+     x2="205.5"
+     y2="244"
+     id="line76"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="205"
+     cy="85"
+     r="4"
+     id="circle78"
+     sodipodi:cx="205"
+     sodipodi:cy="85"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="205"
+     cy="245"
+     r="4"
+     id="circle80"
+     sodipodi:cx="205"
+     sodipodi:cy="245"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <line
+     x1="220.5"
+     y1="124"
+     x2="220.5"
+     y2="284"
+     id="line82"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="220"
+     cy="125"
+     r="4"
+     id="circle84"
+     sodipodi:cx="220"
+     sodipodi:cy="125"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="220"
+     cy="285"
+     r="4"
+     id="circle86"
+     sodipodi:cx="220"
+     sodipodi:cy="285"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <!-- stage 4 -->
+  <line
+     x1="260.5"
+     y1="84"
+     x2="260.5"
+     y2="164"
+     id="line88"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="260"
+     cy="85"
+     r="4"
+     id="circle90"
+     sodipodi:cx="260"
+     sodipodi:cy="85"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="260"
+     cy="165"
+     r="4"
+     id="circle92"
+     sodipodi:cx="260"
+     sodipodi:cy="165"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <line
+     x1="275.5"
+     y1="124"
+     x2="275.5"
+     y2="204"
+     id="line94"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="275"
+     cy="125"
+     r="4"
+     id="circle96"
+     sodipodi:cx="275"
+     sodipodi:cy="125"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="275"
+     cy="205"
+     r="4"
+     id="circle98"
+     sodipodi:cx="275"
+     sodipodi:cy="205"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <!-- stage 5 -->
+  <line
+     x1="315.5"
+     y1="44"
+     x2="315.5"
+     y2="84"
+     id="line100"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="315"
+     cy="45"
+     r="4"
+     id="circle102"
+     sodipodi:cx="315"
+     sodipodi:cy="45"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="315"
+     cy="85"
+     r="4"
+     id="circle104"
+     sodipodi:cx="315"
+     sodipodi:cy="85"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <line
+     x1="315.5"
+     y1="124"
+     x2="315.5"
+     y2="164"
+     id="line106"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="315"
+     cy="125"
+     r="4"
+     id="circle108"
+     sodipodi:cx="315"
+     sodipodi:cy="125"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="315"
+     cy="165"
+     r="4"
+     id="circle110"
+     sodipodi:cx="315"
+     sodipodi:cy="165"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <line
+     x1="315.5"
+     y1="204"
+     x2="315.5"
+     y2="244"
+     id="line112"
+     style="stroke:#000000;stroke-width:1" />
+  <circle
+     cx="315"
+     cy="205"
+     r="4"
+     id="circle114"
+     sodipodi:cx="315"
+     sodipodi:cy="205"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <circle
+     cx="315"
+     cy="245"
+     r="4"
+     id="circle116"
+     sodipodi:cx="315"
+     sodipodi:cy="245"
+     sodipodi:rx="4"
+     sodipodi:ry="4"
+     style="fill:#000000"
+     transform="translate(0.5,-1)" />
+  <!-- horizontal lines -->
+  <line
+     x1="0.5"
+     y1="4"
+     x2="355.5"
+     y2="4"
+     id="line118"
+     style="stroke:#000000;stroke-width:1" />
+  <line
+     x1="0.5"
+     y1="44"
+     x2="355.5"
+     y2="44"
+     id="line120"
+     style="stroke:#000000;stroke-width:1" />
+  <line
+     x1="0.5"
+     y1="84"
+     x2="355.5"
+     y2="84"
+     id="line122"
+     style="stroke:#000000;stroke-width:1" />
+  <line
+     x1="0.5"
+     y1="124"
+     x2="355.5"
+     y2="124"
+     id="line124"
+     style="stroke:#000000;stroke-width:1" />
+  <line
+     x1="0.5"
+     y1="164"
+     x2="355.5"
+     y2="164"
+     id="line126"
+     style="stroke:#000000;stroke-width:1" />
+  <line
+     x1="0.5"
+     y1="204"
+     x2="355.5"
+     y2="204"
+     id="line128"
+     style="stroke:#000000;stroke-width:1" />
+  <line
+     x1="0.5"
+     y1="244"
+     x2="355.5"
+     y2="244"
+     id="line130"
+     style="stroke:#000000;stroke-width:1" />
+  <line
+     x1="0.5"
+     y1="284"
+     x2="355.5"
+     y2="284"
+     id="line132"
+     style="stroke:#000000;stroke-width:1" />
+</svg>
