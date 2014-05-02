@@ -225,7 +225,7 @@ class Library(object):
         )
         
         # binary search
-        self.ripl.assume('contains',
+        self.ripl.assume('array_contains',
             """(lambda (arr min max val)
                 (if (int_eq min max)
                     false
