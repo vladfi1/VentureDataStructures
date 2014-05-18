@@ -59,7 +59,19 @@ class Library(object):
                 )
             )"""
         )
-                
+        
+        self.ripl.assume('clamp', """
+          (lambda (min max x)
+            (if (< x min) min
+            (if (> x max) max
+                          x)))""")
+
+        self.ripl.assume('foldl', """
+          (lambda (op x min max f)
+            (if (= min max) x
+              (foldl op (op x (f min)) (+ min 1) max f)))""")
+
+        
         self.ripl.assume('int_pow',
             """(mem (lambda (base exp)
                 (if (int_eq exp 0)
@@ -444,19 +456,20 @@ class Library(object):
                 ((matrix_get_map mat) row col))
         """)
         
-        self.ripl.assume('matrix_get_row', """
-            (lambda (mat row)
-                (let ((map (matrix_get_map mat)))
-                    (lambda (col)
-                        (map row col))))
-        """)
-                
-        self.ripl.assume('matrix_get_row', """
-            (lambda (mat col)
-                (let ((map (matrix_get_map mat)))
-                    (lambda (row)
-                        (map row col))))
-        """)
+        
+        #self.ripl.assume('matrix_get_row', """
+        #    (lambda (mat row)
+        #        (let ((map (matrix_get_map mat)))
+        #            (lambda (col)
+        #                (map row col))))
+        #""")
+        #       
+        #self.ripl.assume('matrix_get_col', """
+        #    (lambda (mat col)
+        #        (let ((map (matrix_get_map mat)))
+        #            (lambda (row)
+        #                (map row col))))
+        #""")
         
         self.ripl.assume('matrix_row_view', """
             (lambda (mat)
@@ -891,6 +904,35 @@ class Library(object):
     
     def observe_categorical(self, categorical, literal):
         self.ripl.observe('(flip (categorical_get_weight %s %d))' % (categorical, literal), True)
+    
+    def load_multinomial(self):
+      self.load('misc')
+    
+      self.ripl.assume('approx_binomial', """
+        (lambda (n p)
+          (let ((x (clamp 0 n (normal (* p n) (sqrt (* n (- p (* p p))))))))
+            (array (- n x) x)))""")
+
+      self.ripl.assume('multinomial_array', """
+        (lambda (n min max f)
+          (let ((avg (int_div (+ min max) 2)))
+            (if (= min avg) (array n)
+              (let ((rsum (foldl + 0 avg max f))
+                    (b (approx_binomial n (/ rsum (foldl + rsum min avg f)))))
+                (concat
+                  (multinomial_array (lookup b 0) min avg f)
+                  (multinomial_array (lookup b 1) avg max f))))))""")
+
+      self.ripl.assume('multinomial_func', """
+        (lambda (n min max f)
+          (let ((avg (int_div (+ min max) 2)))
+            (if (= min avg) (lambda (i) n)
+              (let ((rsum (foldl + 0 avg max f))
+                    (b (approx_binomial n (/ rsum (foldl + rsum min avg f))))
+                    (l (multinomial_func (lookup b 0) min avg f))
+                    (r (multinomial_func (lookup b 1) avg max f)))
+                (lambda (i) (if (< i avg) (l i) (r i)))))))""")
+
     
     def load_dirichlet(self):
         self.load('array')

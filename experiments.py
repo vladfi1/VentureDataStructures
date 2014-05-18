@@ -476,12 +476,16 @@ def test_categorical(N):
     lib.observe_categorical('cat', 0)
     ripl.predict('(categorical_sample cat)')
 
-def test_dirichlet(N):
-    lib.load('dirichlet')
+def test_multinomial_array(N):
+    lib.load('multinomial')
     
-    ripl.assume('N', N)
-    
-    
+    ripl.assume('m', '(multinomial_array %d 0 %d (lambda (i) i))' % (N, N))
+
+def test_multinomial_func(N):
+    lib.load('multinomial')
+
+    ripl.assume('f', '(multinomial_func %d 0 %d (lambda (i) i))' % (N, N))
+    [ripl.predict('(f %d)' % i) for i in range(N)]
 
 def cprofile(test_fun, N, I=100):
     cProfile.runctx("test_fun(N)", None, locals())
